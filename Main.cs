@@ -31,8 +31,7 @@ namespace TestScript
       // but to be able to call them from chat they must be public static 
        static public void ShowHelloWorld()
        {
-            MyAPIGateway.Ut
-            ilities.ShowMessage("Hello", "World !");
+            MyAPIGateway.Utilities.ShowMessage("Hello", "World !");
        }
        //by calling this method, you will see mission Screen
       static public void ShowMissionScreen()
