@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq; 
 using System.Text;  
 using System.Threading.Tasks;
-using Sandbox.ModAPI; 
+using Sandbox.ModAPI;
+using Sandbox.Common;
 
 /*   
   Welcome to Modding API. This is one of two sample scripts that you can modify for your needs, 
@@ -25,18 +26,40 @@ using Sandbox.ModAPI;
  
 namespace ResponseTriggerHelloWorld 
 {
-    class Script
+  public class CommandHello : ChatCommand
+  {
+    public CommandHello()
+    : base(ChatCommandSecurity.User, "hello", new[] { "/hello"})
+  {
+  }
+  
+  public override void Help(ulong steamId bool brief)
+}
+
+
+
+    public class CommandHelloWorld : ChatCommand
     {
-      // ShowHelloWorld must be public static, you can define your own methods,
-      // but to be able to call them from chat they must be public static 
-       static public void ShowHelloWorld()
-       {
-            MyAPIGateway.Utilities.ShowMessage("Hello", "World !");
-       }
-       //by calling this method, you will see mission Screen
-      static public void ShowMissionScreen()
-      {
-          MyAPIGateway.Utilities.ShowMissionScreen();
-      }
-   }
+        public CommandHelloWorld()
+            : base(ChatCommandSecurity.User, "hello", new[] { "/hello" })
+        {
+        }
+
+        public override void Help(ulong steamId, bool brief)
+        {
+            MyAPIGateway.Utilities.ShowMessage("/hello", "A simple Hello World test.");
+        }
+
+        public override bool Invoke(ulong steamId, long playerId, string messageText)
+        {
+            if (messageText.Equals("/hello", StringComparison.InvariantCultureIgnoreCase))
+            {
+                MyAPIGateway.Utilities.ShowNotification("Hello back to you", 1000, MyFontEnum.Red); // display on your screen.
+                MyAPIGateway.Utilities.ShowMessage("Computer", "Hello back to you");  // echo back to yourself.
+                MyAPIGateway.Utilities.SendMessage("This player thinks it cool to say hello"); // broadcast to everyone like a standard chat message, but from YOU.
+                return true;
+            }
+            return false;
+        }
+    }
 }
